@@ -2,13 +2,19 @@ name: Testing API
 
 on: push
 
+defaults:
+  run:
+    working-directory: api
+
 jobs:
   setup:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-
+        uses: actions/checkout@v3
+      - name: Install poetry
+        run: |
+          pipx install poetry
       - name: Set up Python and Poetry
         uses: actions/setup-python@v4
         with:
