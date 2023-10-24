@@ -13,7 +13,7 @@ jobs:
         run: |
           python -m pip install --user --upgrade pipx
           python -m pipx ensurepath
-          pipx install poetry alembic
+          pipx install poetry
           export PATH="$HOME/.local/bin:$PATH"  # Add pipx binaries to the PATH
           poetry --version
 
