@@ -1,7 +1,8 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "node": true
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -14,6 +15,12 @@
   "settings": {
     "react": {
       "version": "detect"
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".ts", ".tsx", ".d.ts"],
+        "moduleDirectory": ["web", "node_modules"]
+      }
     }
   },
   "plugins": ["react", "react-hooks", "@typescript-eslint"],
@@ -24,10 +31,14 @@
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:prettier/recommended",
-    "editorconfig.editorconfig"
+    "next/core-web-vitals"
   ],
+  "globals": { "JSX": true },
   "rules": {
     "react/props-types": 0,
-    "react/react-in-jsx-scope": 0
+    "react/react-in-jsx-scope": 0,
+    "react/jsx-handler-names": "off",
+    "jsx-a11y/no-noninteractive-tabindex": "off",
+    "no-underscore-dangle": "off"
   }
 }
