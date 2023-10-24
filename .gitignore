@@ -1,0 +1,2 @@
+# Ignore data of docker container.
+.db_data
