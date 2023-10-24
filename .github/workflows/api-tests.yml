@@ -4,7 +4,7 @@ on: push
 
 defaults:
   run:
-    working-directory: ./app
+    working-directory: ./api
 
 jobs:
   black:
