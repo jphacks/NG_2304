@@ -2,13 +2,12 @@ name: Testing API
 
 on: push
 
-defaults:
-  run:
-    working-directory: api
-
 jobs:
   setup:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: api
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
