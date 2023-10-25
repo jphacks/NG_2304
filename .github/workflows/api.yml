@@ -22,6 +22,8 @@ jobs:
           cache: "poetry"
       - name: Install dependencies
         run: poetry install --with dev --no-interaction
+      - name: Run isort
+        run: poetry run isort --check-only .
       - name: Run black check
         run: poetry run black --check .
       - name: Run flake8 check
