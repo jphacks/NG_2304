@@ -15,7 +15,7 @@ jobs:
         run: ls -la
       - name: Install pipx and poetry
         run: |
-          python -m pip poetry
+          python -m pip install poetry
       - name: Set up Python and Poetry
         uses: actions/setup-python@v4
         with:
