@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: test
-        run: ls -la
+        run: ls -la && pwd
       - name: Run black check
         run: poetry run black --check .
 
