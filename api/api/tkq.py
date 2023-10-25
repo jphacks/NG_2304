@@ -1,9 +1,11 @@
+from typing import Union
+
 import taskiq_fastapi
 from taskiq import InMemoryBroker, ZeroMQBroker
 
 from api.settings import settings
 
-broker = ZeroMQBroker()
+broker: Union[InMemoryBroker, ZeroMQBroker] = ZeroMQBroker()
 
 if settings.environment.lower() == "pytest":
     broker = InMemoryBroker()
