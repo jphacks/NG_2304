@@ -27,8 +27,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: setup
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
       - name: Run black check
         run: $HOME/.local/bin/poetry run black --check .
 
@@ -36,8 +34,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: setup
     steps:
-      - name: Checkout code
-        run: ls -al
       - name: Run flake8 check
         run: $HOME/.local/bin/poetry run flake8 --count .
 
@@ -45,8 +41,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: setup
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
       - name: Run mypy check
         run: $HOME/.local/bin/poetry run mypy .
 
@@ -57,8 +51,6 @@ jobs:
       api-db:
         image: postgres:13.8-bullseye
         env:
-          POSTGRES_PASSWORD: api
-          POSTGRES_USER: api
           POSTGRES_DB: api
         options: >-
           --health-cmd="pg_isready"
@@ -68,8 +60,6 @@ jobs:
         ports:
           - 5432:5432
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
       - name: Run pytest check
         run: $HOME/.local/bin/poetry run pytest -vv --cov="api" .
         env:
