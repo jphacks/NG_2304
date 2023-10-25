@@ -29,4 +29,3 @@ RUN poetry install
 EXPOSE 8000
 
 CMD ["/bin/bash", "-c", "poetry install && /app/.venv/bin/python -m api"]
-
