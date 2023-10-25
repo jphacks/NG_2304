@@ -27,6 +27,8 @@ jobs:
     needs: common-setup
     runs-on: ubuntu-latest
     steps:
+      - name: test
+        run: ls -la
       - name: Run black check
         run: poetry run black --check .
 
