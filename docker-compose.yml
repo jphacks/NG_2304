@@ -6,14 +6,14 @@ services:
     build: ./api
     image: api:${API_VERSION:-latest}
     ports:
-      - 8000:8000
+    - 8000:8000
     restart: always
     depends_on:
       db:
         condition: service_healthy
     volumes:
-      - ./api:/app
-      - venv:/app/.venv
+    - ./api:/app
+    - venv:/app/.venv
     environment:
       API_RELOAD: true
       API_HOST: 0.0.0.0
@@ -28,31 +28,31 @@ services:
     container_name: web
     build: ./web
     ports:
-      - 3000:3000
+    - 3000:3000
     volumes:
-      - ./web:/app
-      - next_build:/app/.next
-      - node_modules:/app/node_modules
+    - ./web:/app
+    - next_build:/app/.next
+    - node_modules:/app/node_modules
     restart: always
     tty: true
     stdin_open: true
     environment:
-      - CHOKIDAR_USEPOLLING=true
+    - CHOKIDAR_USEPOLLING=true
     depends_on:
-      - api
+    - api
 
   db:
     container_name: database
     image: postgres:16-bullseye
     ports:
-      - 5432:5432
+    - 5432:5432
     environment:
       POSTGRES_USER: postgres_user
       POSTGRES_PASSWORD: postgres_password
       POSTGRES_DB: app
       encoding: utf8
     volumes:
-      - ./.db_data:/var/lib/postgresql/data
+    - ./.db_data:/var/lib/postgresql/data
     restart: always
     healthcheck:
       test: pg_isready -U postgres_user -d app
@@ -64,9 +64,7 @@ services:
     container_name: migrator
     image: api:${API_VERSION:-latest}
     restart: on-failure
-    command: bash -c "
-      source `poetry env info --path`/bin/activate
-      && python -m alembic upgrade head"
+    command: bash -c " source `poetry env info --path`/bin/activate && python -m alembic upgrade head"
     environment:
       API_DB_HOST: db
       API_DB_PORT: 5432
