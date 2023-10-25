@@ -7,7 +7,7 @@ defaults:
     working-directory: api
 
 jobs:
-  common-setup:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -30,7 +30,7 @@ jobs:
         run: poetry run mypy .
 
   pytest:
-    needs: common-setup
+    needs: build
     runs-on: ubuntu-latest
     services:
       api-db:
