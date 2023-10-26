@@ -28,7 +28,7 @@ class UvicornWorker(BaseUvicornWorker):
     }
 
 
-class GunicornApplication(BaseApplication):
+class GunicornApplication(BaseApplication):  # type: ignore
     """
     Custom gunicorn application.
 
@@ -76,4 +76,4 @@ class GunicornApplication(BaseApplication):
 
         :returns: python path to app factory.
         """
-        return import_app(self.app)
+        return import_app(self.app)  # type: ignore
