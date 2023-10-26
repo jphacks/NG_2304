@@ -72,10 +72,27 @@ ignore =
   WPS473,
   ; too many no-cover comments.
   WPS403,
+  ; Inline literal start-string without end-string.
+  RST214, RST201,RST203,RST301,
+  ; max local variables
+  WPS210,
+  ; Found line with high Jones Complexity
+  WPS221,
+  ; Found too short name
+  WPS111,
+  ; Found shadowed class attribute:
+  WPS601,
+  ; comparison to False should be 'if cond is False:' or 'if not cond:
+  ; When use sqlalchemy it's will be annoying
+  E712,
+  ; Found too many raises in a function: 4 > 3
+  WPS238,
+  ; Unexpected section title.
+  RST401,
 
 per-file-ignores =
   ; all tests
-  test_*.py,tests.py,tests_*.py,*/tests/*,conftest.py:
+  test_*.py,tests.py,tests_*.py,*/tests/*,conftest.py,static.py:
   ; Use of assert detected
   S101,
   ; Found outer scope names shadowing
@@ -88,6 +105,8 @@ per-file-ignores =
   DAR101,
   ; Found too many arguments
   WPS211,
+  ; hardcoded-password-string
+  S105,
 
   ; all init files
   __init__.py:
