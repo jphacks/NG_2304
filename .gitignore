@@ -1,2 +1,8 @@
 # Ignore data of docker container.
 .db_data
+
+extension/out
+extension/dist
+extension/node_modules
+extension/.vscode-test/
+extension/*.vsix
