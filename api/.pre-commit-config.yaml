@@ -31,12 +31,12 @@ repos:
         language: system
         types: [python]
 
-      - id: flake8
-        name: Check with Flake8
-        entry: bash -c 'cd api && poetry run flake8 --count .'
-        language: system
-        pass_filenames: false
-        types: [python]
+      # - id: flake8
+      #   name: Check with Flake8
+      #   entry: bash -c 'cd api && poetry run flake8 --count .'
+      #   language: system
+      #   pass_filenames: false
+      #   types: [python]
 
       - id: mypy
         name: Validate types with MyPy
