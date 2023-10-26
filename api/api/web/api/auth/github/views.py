@@ -66,7 +66,8 @@ async def github_callback(
     if code is None:
         logger.error("Github login failed, Not fonund code to get credentials.")
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, detail="Github login faild."
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Github login faild.",
         )
 
     try:
