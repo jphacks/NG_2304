@@ -27,8 +27,10 @@ class Settings(BaseSettings):
     with environment variables.
     """
 
+    domain: str = "localhost"
     host: str = "127.0.0.1"
     port: int = 8000
+    web_uri: str = "http://localhost:3000/"
     # quantity of workers for uvicorn
     workers_count: int = 1
     # Enable uvicorn reloading
@@ -39,12 +41,29 @@ class Settings(BaseSettings):
 
     log_level: LogLevel = LogLevel.INFO
     # Variables for the database
-    db_host: str = "localhost"
+    db_host: str = "db"
     db_port: int = 5432
-    db_user: str = "api"
-    db_pass: str = "api"
-    db_base: str = "api"
+    db_user: str = "postgres_user"
+    db_pass: str = "postgres_password"
+    db_base: str = "app"
     db_echo: bool = False
+
+    # github oauth
+    github_client_id: str = ""
+    github_client_secret: str = ""
+
+    # token credentials
+    token_algorithm: str = "HS512"
+    token_secret_key: str = "app_some_secret_key"
+
+    @property
+    def is_production(self) -> bool:
+        """
+        This property checks if the environment is set to "production".
+
+        :returns: True if the current environment is "production," False otherwise.
+        """
+        return self.environment == "production"
 
     @property
     def db_url(self) -> URL:
