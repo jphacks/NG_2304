@@ -2,6 +2,7 @@
   "name": "extension",
   "displayName": "extension",
   "description": "",
+  "publisher": "iwatagumi",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.83.0"
@@ -9,7 +10,9 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [

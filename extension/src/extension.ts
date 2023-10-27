@@ -23,8 +23,26 @@ export function activate(context: vscode.ExtensionContext) {
 		githublogin(githubLoginUri);
 	});
 
-	context.subscriptions.push(disposable);
+
+	/// おやすみ now(2023/10/28 01:58 起きるまで3時間ない)
+	const handleUri = (uri: vscode.Uri) => {
+		const queryParams = new URLSearchParams(uri.query);
+
+		if (queryParams.has('say')) {
+			vscode.window.showInformationMessage(`URI Handler says: ${queryParams.get('say') as string}`);
+			console.log(`${queryParams.get('say') as string}`);
+		}
+		console.log(`${queryParams.get('say') as string}`);
+	};
+
+	context.subscriptions.push(
+		vscode.window.registerUriHandler({
+			handleUri
+		}),
+		disposable
+	);
 }
 
+
 // This method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
