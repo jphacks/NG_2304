@@ -2,6 +2,9 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
+import { githublogin } from './common/login';
+import { githubLoginUri } from './static';
+
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -16,6 +19,8 @@ export function activate(context: vscode.ExtensionContext) {
 	let disposable = vscode.commands.registerCommand('extension.githubLogin', () => {
 
 		vscode.window.showInformationMessage('Github Login Command');
+
+		githublogin(githubLoginUri);
 	});
 
 	context.subscriptions.push(disposable);
