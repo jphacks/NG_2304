@@ -14,8 +14,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "extension.helloWorld",
-        "title": "Hello World"
+        "command": "extension.githubLogin",
+        "title": "Github Login"
       }
     ]
   },
