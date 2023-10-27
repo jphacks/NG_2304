@@ -52,7 +52,7 @@ services:
       POSTGRES_DB: app
       encoding: utf8
     volumes:
-    - ./.db_data:/var/lib/postgresql/data
+    - db_data:/var/lib/postgresql/data
     restart: always
     healthcheck:
       test: pg_isready -U postgres_user -d app
@@ -81,3 +81,4 @@ volumes:
   venv:
   next_build:
   node_modules:
+  db_data:
