@@ -14,6 +14,7 @@ class Static:
         "Accept": "application/vnd.github+json",
         "X-GitHub-Api-Version": "2022-11-28",
     }
+    VSCODE_URL = "vscode://iwatagumi.extension"
 
     TOKEN_CODE_EXPIRE_TIME = datetime.timedelta(minutes=15)
     ACCESS_TOKEN_EXPIRE_TIME = datetime.timedelta(minutes=15)

@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
 from fastapi.responses import RedirectResponse
 from github import Auth, Github
 from loguru import logger
+from yarl import URL
 
 from api.db.dao.github_tokens_dao import GithubTokensDAO
 from api.db.dao.token_code_dao import TokenCodeDAO
@@ -19,6 +20,7 @@ logger = logger.bind(task="GithubAuth")
 
 
 @router.get("/login")
+@router.get("/login-vscode")
 async def github_login(request: Request) -> Response:
     """Generate login url and redirect.
 
@@ -39,11 +41,14 @@ async def github_login(request: Request) -> Response:
         )
 
     logger.info("Success to generate login url and redirect.")
-
+    print(request.path_params, request.url_for("github_login"))
+    if request.path_params == request.url_for("github_login"):
+        return RedirectResponse(github.auth_url(settings.github_client_id, request.url_for("github_callback")))
     return RedirectResponse(github.auth_url(settings.github_client_id))
 
 
 @router.get("/callback")
+@router.get("/callback-vscode")
 async def github_callback(
     request: Request,
     code: Optional[str] = None,
@@ -140,6 +145,11 @@ async def github_callback(
         )
 
     query = {"code": await token_code_dao.create_code(user.id)}
+    print(request.url.split("?")[0], request.url_for("github_callback"))
+    if request.url.split("?")[0] == request.url_for("github_callback"):
+        vscode_url = URL(settings.VSCODE_URL)
+        vscode_url.query = query.copy()
+        return RedirectResponse(str(vscode_url))
     return RedirectResponse(
         "{0}?{1}".format(
             urljoin(settings.web_uri, "callback"),
