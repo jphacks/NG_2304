@@ -39,6 +39,7 @@ async def github_login(request: Request) -> Response:
         )
 
     logger.info("Success to generate login url and redirect.")
+    print(request.url.path)
 
     return RedirectResponse(github.auth_url(settings.github_client_id))
 
