@@ -4,6 +4,8 @@ import * as vscode from 'vscode';
 
 import { githublogin } from './common/login';
 import { githubLoginUri } from './static';
+import AuthSettings from './common/auth';
+import { genToken } from './common/auth';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -25,14 +27,31 @@ export function activate(context: vscode.ExtensionContext) {
 
 
 	/// おやすみ now(2023/10/28 01:58 起きるまで3時間ない)
-	const handleUri = (uri: vscode.Uri) => {
+	const handleUri = async (uri: vscode.Uri) => {
 		const queryParams = new URLSearchParams(uri.query);
 
-		if (queryParams.has('say')) {
-			vscode.window.showInformationMessage(`URI Handler says: ${queryParams.get('say') as string}`);
-			console.log(`${queryParams.get('say') as string}`);
+		if (queryParams.has('seal')) {
+
+			// console.log(`${queryParams.get('seal') as string}`);
+
+			let token = await genToken(`${queryParams.get('seal') as string}`);
+
+			// console.log(token);
+			// console.log(token['session_id']);
+
+			AuthSettings.init(context);
+			const settings = AuthSettings.instance;
+
+			// session_id, access_tokenをSecretStorageに格納
+			settings.storeAuthData("session_id", token['session_id']);
+			settings.storeAuthData("access_token", token['access_token']);
+
+			// session_id, access_token呼び出しテスト
+			const tokenOutput = await settings.getAuthData("session_id");
+			const tokenOutput2 = await settings.getAuthData("access_token");
+			console.log("せっしょんid" + tokenOutput);
+			console.log("あくせすとーくん" + tokenOutput2);
 		}
-		console.log(`${queryParams.get('say') as string}`);
 	};
 
 	context.subscriptions.push(
