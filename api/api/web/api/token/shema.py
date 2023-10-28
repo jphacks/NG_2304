@@ -10,6 +10,6 @@ class TokenCodeDTO(BaseModel):
 
 
 class JWTTokenPostDTO(BaseModel):
-    """DTO for when responce JWT token."""
+    """DTO for when response JWT token."""
 
     session_id: Optional[str] = None

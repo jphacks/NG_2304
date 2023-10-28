@@ -4,7 +4,7 @@ from loguru import logger
 
 from api.db.dao.session_dao import SessionDAO
 from api.db.dao.token_code_dao import TokenCodeDAO
-from api.db.dao.user_dao import UserDao
+from api.db.dao.user_dao import UserDAO
 from api.settings import settings
 from api.static import static
 from api.web.api.token.shema import JWTTokenPostDTO, TokenCodeDTO
@@ -60,7 +60,7 @@ async def generate_token(
 @router.post("/token/refresh")
 async def generate_jwt_token(
     token_dto: JWTTokenPostDTO,
-    user_dao: UserDao = Depends(),
+    user_dao: UserDAO = Depends(),
     session_dao: SessionDAO = Depends(),
     session_id: str = Cookie(default=None),
 ) -> Response:

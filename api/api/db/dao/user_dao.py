@@ -8,7 +8,7 @@ from api.db.dependencies import get_db_session
 from api.db.models.user_model import UserModel
 
 
-class UserDao:
+class UserDAO:
     """Class for accessing user table."""
 
     def __init__(self, session: AsyncSession = Depends(get_db_session)):
