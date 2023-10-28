@@ -41,6 +41,7 @@ async def github_login(request: Request) -> Response:
         )
 
     logger.info("Success to generate login url and redirect.")
+    print(request.url.path)
 
     url_path_without_code = request.url.path
     url_path_without_code = url_path_without_code.split("?")[0]
