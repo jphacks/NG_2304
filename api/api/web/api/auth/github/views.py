@@ -10,7 +10,7 @@ from yarl import URL
 
 from api.db.dao.github_tokens_dao import GithubTokensDAO
 from api.db.dao.token_code_dao import TokenCodeDAO
-from api.db.dao.user_dao import UserDao
+from api.db.dao.user_dao import UserDAO
 from api.libs.oauth import NotVerifiedEmailError, TokenRetrievalError, github
 from api.settings import settings
 from api.static import static
@@ -62,7 +62,7 @@ async def github_login(request: Request) -> Response:
 async def github_callback(
     request: Request,
     code: Optional[str] = None,
-    user_dao: UserDao = Depends(),
+    user_dao: UserDAO = Depends(),
     token_code_dao: TokenCodeDAO = Depends(),
     github_tokens_dao: GithubTokensDAO = Depends(),
 ) -> Response:
@@ -90,7 +90,6 @@ async def github_callback(
             code=code,
             client_id=settings.github_client_id,
             client_secret=settings.github_client_secret,
-            redirect_uri=str(request.url_for("github_callback")),
         )
         credentials["created_at"] = datetime.now(tz=static.TIME_ZONE)
         logger.info("Get auth credentials from github API.")

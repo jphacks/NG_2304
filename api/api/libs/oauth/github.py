@@ -22,7 +22,7 @@ async def get_credentials(
     code: str,
     client_id: str,
     client_secret: str,
-    redirect_uri: str,
+    redirect_uri: str = "",
 ) -> CredentialsType:
     """
     Get access token from Github API.
@@ -48,8 +48,10 @@ async def get_credentials(
         "code": code,
         "client_id": client_id,
         "client_secret": client_secret,
-        "redirect_uri": redirect_uri,
     }
+
+    if len(params["redirect_uri"]) == 0:
+        params["redirect_uri"] = redirect_uri
 
     async with httpx.AsyncClient() as client:
         response = await client.post(
