@@ -41,10 +41,14 @@ async def github_login(request: Request) -> Response:
         )
 
     logger.info("Success to generate login url and redirect.")
-    print(request.path_params, request.url_for("github_login"))
-    if request.path_params == request.url_for("github_login"):
+
+    url_path_without_code = request.url.path
+    url_path_without_code = url_path_without_code.split("?")[0]
+
+    if url_path_without_code == "/api/auth/github/login-vscode":
         return RedirectResponse(github.auth_url(settings.github_client_id, request.url_for("github_callback")))
-    return RedirectResponse(github.auth_url(settings.github_client_id))
+    else:
+        return RedirectResponse(github.auth_url(settings.github_client_id))
 
 
 @router.get("/callback")
@@ -145,14 +149,16 @@ async def github_callback(
         )
 
     query = {"code": await token_code_dao.create_code(user.id)}
-    print(request.url.split("?")[0], request.url_for("github_callback"))
-    if request.url.split("?")[0] == request.url_for("github_callback"):
-        vscode_url = URL(settings.VSCODE_URL)
-        vscode_url.query = query.copy()
-        return RedirectResponse(str(vscode_url))
-    return RedirectResponse(
-        "{0}?{1}".format(
-            urljoin(settings.web_uri, "callback"),
-            urlencode(query),
-        ),
-    )
+    url_path_without_code = request.url.path
+    url_path_without_code = url_path_without_code.split("?")[0]
+
+    if url_path_without_code == "/api/auth/github/callback-vscode":
+        vscode_url = URL(static.VSCODE_URL).with_query(query)
+        return RedirectResponse(vscode_url)
+    else:
+        return RedirectResponse(
+            "{0}?{1}".format(
+                urljoin(settings.web_uri, "callback"),
+                urlencode(query),
+            ),
+        )
