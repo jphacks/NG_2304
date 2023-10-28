@@ -6,3 +6,5 @@ extension/dist
 extension/node_modules
 extension/.vscode-test/
 extension/*.vsix
+
+.history
