@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'lib/axios';
 import { useEffect } from 'react';
 import getLayout from '@/components/layouts/main';
 import { useRouter } from 'next/router';
