@@ -50,7 +50,7 @@ async def get_credentials(
         "client_secret": client_secret,
     }
 
-    if len(params["redirect_uri"]) == 0:
+    if len(redirect_uri) == 0:
         params["redirect_uri"] = redirect_uri
 
     async with httpx.AsyncClient() as client:
