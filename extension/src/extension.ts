@@ -2,6 +2,9 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
+import { githublogin } from './common/login';
+import { githubLoginUri } from './static';
+
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -13,14 +16,33 @@ export function activate(context: vscode.ExtensionContext) {
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('extension.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from extension!');
+	let disposable = vscode.commands.registerCommand('extension.githubLogin', () => {
+
+		vscode.window.showInformationMessage('Github Login Command');
+
+		githublogin(githubLoginUri);
 	});
 
-	context.subscriptions.push(disposable);
+
+	/// おやすみ now(2023/10/28 01:58 起きるまで3時間ない)
+	const handleUri = (uri: vscode.Uri) => {
+		const queryParams = new URLSearchParams(uri.query);
+
+		if (queryParams.has('say')) {
+			vscode.window.showInformationMessage(`URI Handler says: ${queryParams.get('say') as string}`);
+			console.log(`${queryParams.get('say') as string}`);
+		}
+		console.log(`${queryParams.get('say') as string}`);
+	};
+
+	context.subscriptions.push(
+		vscode.window.registerUriHandler({
+			handleUri
+		}),
+		disposable
+	);
 }
 
+
 // This method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }

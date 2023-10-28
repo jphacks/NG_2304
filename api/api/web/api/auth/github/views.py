@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
 from fastapi.responses import RedirectResponse
 from github import Auth, Github
 from loguru import logger
+from yarl import URL
 
 from api.db.dao.github_tokens_dao import GithubTokensDAO
 from api.db.dao.token_code_dao import TokenCodeDAO
@@ -19,6 +20,7 @@ logger = logger.bind(task="GithubAuth")
 
 
 @router.get("/login")
+@router.get("/login-vscode")
 async def github_login(request: Request) -> Response:
     """Generate login url and redirect.
 
@@ -41,10 +43,17 @@ async def github_login(request: Request) -> Response:
     logger.info("Success to generate login url and redirect.")
     print(request.url.path)
 
-    return RedirectResponse(github.auth_url(settings.github_client_id))
+    url_path_without_code = request.url.path
+    url_path_without_code = url_path_without_code.split("?")[0]
+
+    if url_path_without_code == "/api/auth/github/login-vscode":
+        return RedirectResponse(github.auth_url(settings.github_client_id, request.url_for("github_callback")))
+    else:
+        return RedirectResponse(github.auth_url(settings.github_client_id))
 
 
 @router.get("/callback")
+@router.get("/callback-vscode")
 async def github_callback(
     request: Request,
     code: Optional[str] = None,
@@ -141,9 +150,16 @@ async def github_callback(
         )
 
     query = {"code": await token_code_dao.create_code(user.id)}
-    return RedirectResponse(
-        "{0}?{1}".format(
-            urljoin(settings.web_uri, "callback"),
-            urlencode(query),
-        ),
-    )
+    url_path_without_code = request.url.path
+    url_path_without_code = url_path_without_code.split("?")[0]
+
+    if url_path_without_code == "/api/auth/github/callback-vscode":
+        vscode_url = URL(static.VSCODE_URL).with_query(query)
+        return RedirectResponse(vscode_url)
+    else:
+        return RedirectResponse(
+            "{0}?{1}".format(
+                urljoin(settings.web_uri, "callback"),
+                urlencode(query),
+            ),
+        )
