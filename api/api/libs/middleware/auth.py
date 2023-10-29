@@ -1,9 +1,10 @@
-from typing import Optional
-from api.settings import settings
-from api.db.dao.user_dao import UserDAO
-from fastapi import Cookie, Depends, HTTPException, Header, status
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
+
+from fastapi import Cookie, Depends, Header, HTTPException, status
 from jose import ExpiredSignatureError, JWTError, jwt
+
+from api.db.dao.user_dao import UserDAO
+from api.settings import settings
 
 if TYPE_CHECKING:
     from api.web.api.users.shema import SessionUser

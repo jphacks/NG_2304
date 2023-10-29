@@ -1,9 +1,9 @@
 from datetime import datetime
 from typing import Dict, TypedDict
-from api import settings
 
 import httpx
 
+from api import settings
 from api.libs.oauth import TokenRetrievalError
 from api.static import static
 
