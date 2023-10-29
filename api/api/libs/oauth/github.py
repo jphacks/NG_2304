@@ -3,7 +3,7 @@ from typing import Dict, TypedDict
 
 import httpx
 
-from api import settings
+from api.settings import settings
 from api.libs.oauth import TokenRetrievalError
 from api.static import static
 
@@ -74,7 +74,8 @@ async def get_credentials(
     return response_data
 
 
-async def refresh_access_token(refresh_token: str) -> str:
+# TODO: Create github refresh_token function
+async def refresh_access_token(refresh_token: str) -> str:  # type: ignore
     params: Dict[str, str] = {
         "client_id": settings.github_client_id,
         "client_secret": settings.github_client_secret,
@@ -88,7 +89,6 @@ async def refresh_access_token(refresh_token: str) -> str:
             headers=static.GITHUB_DEFAULT_HEADER,
         )
         response_data = response.json()
-        print(response_data)
 
 
 def auth_url(client_id: str, redirect_uri: str = "") -> str:

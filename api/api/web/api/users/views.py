@@ -11,5 +11,5 @@ router = APIRouter()
 @router.get("/me", response_model=AuthenticatedUser)
 async def user_me(
     user_info: AuthenticatedUser = Depends(is_authenticated),
-):
+) -> AuthenticatedUser:
     return user_info

@@ -10,12 +10,13 @@ if TYPE_CHECKING:
     from api.web.api.users.shema import SessionUser
 
 
+# TODO: Add auto refresh access_token of github
 async def is_authenticated(
     user_dao: UserDAO = Depends(),
     access_token: str = Cookie(default=None),
     session_id: str = Cookie(default=None),
     authorization: Optional[str] = Header(default=None),
-) -> "UserModelDTO":
+) -> "SessionUser":
     from api.web.api.users.shema import SessionUser
 
     if authorization is None and access_token is None:
@@ -56,13 +57,6 @@ async def is_authenticated(
     user = await user_dao.get_user(payload["user_id"])
 
     if user is not None:
-        # access_token gets
-        # print(user.github_tokens)
-        # if access_token invalid:
-        #    if refresh_token is valid:
-        #      reload_refresh_token
-        #    else:
-        #       return 401
         authenticated_user = SessionUser.model_validate(user, from_attributes=True)
         if session_id is not None:
             authenticated_user.session_cert = session_id
