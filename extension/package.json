@@ -49,6 +49,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "@types/diff": "^5.0.7",
     "axios": "^1.6.0"
   }
 }
