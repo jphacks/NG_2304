@@ -10,6 +10,8 @@ RUN pip install poetry==1.4.2
 # # Configuring poetry
 RUN poetry config virtualenvs.in-project true
 
+ENV PYTHONDONTWRITEBYTECODE 1
+
 # # Copying requirements of a project
 COPY pyproject.toml poetry.lock /app/
 WORKDIR /app

@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Dict, TypedDict
+from api import settings
 
 import httpx
 
@@ -16,6 +17,12 @@ class CredentialsType(TypedDict):
     refresh_token_expires_in: int
     token_type: str
     created_at: datetime
+
+
+# class RefreshAccessTokenType(TypedDict):
+#     access_token: str
+#     expires_in: int
+#     refresh_token: str
 
 
 async def get_credentials(
@@ -65,6 +72,23 @@ async def get_credentials(
         raise TokenRetrievalError()
 
     return response_data
+
+
+async def refresh_access_token(refresh_token: str) -> str:
+    params: Dict[str, str] = {
+        "client_id": settings.github_client_id,
+        "client_secret": settings.github_client_secret,
+        "grant_type": "refresh_token",
+        "refresh_token": refresh_token,
+    }
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            static.GITHUB_TOKEN_URL,
+            data=params,
+            headers=static.GITHUB_DEFAULT_HEADER,
+        )
+        response_data = response.json()
+        print(response_data)
 
 
 def auth_url(client_id: str, redirect_uri: str = "") -> str:
