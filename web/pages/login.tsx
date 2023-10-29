@@ -1,8 +1,13 @@
 import getLayout from '@/components/layouts/main';
 import { Button, Card, CardBody, Container, Flex, Heading, Text } from '@chakra-ui/react';
 import { AiFillGithub } from 'react-icons/ai';
+import { useRouter } from 'next/router';
 
 const Login = () => {
+  const router = useRouter();
+  const redirectGithubLogin = () => {
+    router.push('/api/auth/github/login');
+  };
   return (
     <>
       <Flex minH={'calc(100vh - 64px)'}>
@@ -14,7 +19,13 @@ const Login = () => {
                   ログイン
                 </Heading>
                 <Text py='2'>このサービスを利用するには、Github連携が必要です。</Text>
-                <Button leftIcon={<AiFillGithub size='26px' />} bgColor='#171515' size='lg'>
+                <Button
+                  leftIcon={<AiFillGithub size='26px' />}
+                  bgColor='#171515'
+                  size='lg'
+                  colorScheme='blackAlpha'
+                  onClick={redirectGithubLogin}
+                >
                   Login with Github
                 </Button>
               </Flex>

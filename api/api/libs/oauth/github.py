@@ -22,7 +22,7 @@ async def get_credentials(
     code: str,
     client_id: str,
     client_secret: str,
-    redirect_uri: str,
+    redirect_uri: str = "",
 ) -> CredentialsType:
     """
     Get access token from Github API.
@@ -48,8 +48,10 @@ async def get_credentials(
         "code": code,
         "client_id": client_id,
         "client_secret": client_secret,
-        "redirect_uri": redirect_uri,
     }
+
+    if len(redirect_uri) == 0:
+        params["redirect_uri"] = redirect_uri
 
     async with httpx.AsyncClient() as client:
         response = await client.post(
@@ -65,7 +67,7 @@ async def get_credentials(
     return response_data
 
 
-def auth_url(client_id: str) -> str:
+def auth_url(client_id: str, redirect_uri: str = "") -> str:
     """Generate authorization link for Github login.
 
     :param client_id: client_id of Github APP.
@@ -74,7 +76,7 @@ def auth_url(client_id: str) -> str:
     if not static.GITHUB_AUTH_URL.endswith("?"):
         github_auth_url = f"{static.GITHUB_AUTH_URL}?"
 
-    params: Dict[str, str] = {"client_id": client_id}
+    params: Dict[str, str] = {"client_id": client_id, "redirect_uri": redirect_uri}
 
     query = [f"{p}={v}" for p, v in params.items()]
     query_params = "&".join(query)

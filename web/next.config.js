@@ -4,6 +4,16 @@ const nextConfig = {
   compiler: {
     emotion: true,
   },
+  async rewrites() {
+    return {
+      fallback: [
+        {
+          source: '/api/:path*',
+          destination: `${process.env.API_URL}/api/:path*`,
+        },
+      ],
+    };
+  },
 };
 
 module.exports = nextConfig;
