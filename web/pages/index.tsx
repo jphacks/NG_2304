@@ -1,3 +1,5 @@
+import getLayout from '@/components/layouts/main';
+
 export default function Home() {
   return (
     <>
@@ -6,3 +8,5 @@ export default function Home() {
     </>
   );
 }
+
+Home.getLayout = getLayout;

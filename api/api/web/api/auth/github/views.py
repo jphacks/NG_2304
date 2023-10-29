@@ -47,7 +47,7 @@ async def github_login(request: Request) -> Response:
 
     if url_path_without_code == "/api/auth/github/login-vscode":
         redirect_url = github.auth_url(
-            settings.github_client_id, request.url_for("github_callback")
+            settings.github_client_id, str(request.url_for("github_callback"))
         )
         logger.info(f"Redirecting to {redirect_url}")
         return RedirectResponse(redirect_url)
@@ -161,7 +161,7 @@ async def github_callback(
     if url_path_without_code == "/api/auth/github/callback-vscode":
         vscode_url = URL(static.VSCODE_URL).with_query(query)
         logger.info(f"Redirect to {vscode_url}")
-        return RedirectResponse(vscode_url)
+        return RedirectResponse(str(vscode_url))
     else:
         redirect_url = "{0}?{1}".format(
             urljoin(settings.web_uri, "callback"),
