@@ -3,8 +3,8 @@ from typing import Dict, TypedDict
 
 import httpx
 
-from api.settings import settings
 from api.libs.oauth import TokenRetrievalError
+from api.settings import settings
 from api.static import static
 
 
